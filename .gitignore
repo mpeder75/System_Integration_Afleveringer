@@ -1,0 +1,55 @@
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.VC.db
+
+# Visual Studio - workspace / indexes / Copilot
+**/FileContentIndex/
+**/*.vsidx
+**/CopilotIndices/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+**/bin/
+**/obj/
+
+# Rider/IDE
+.idea/
+*.sln.iml
+
+# NuGet
+packages/
+*.nupkg
+.nuget/
+
+# ASP.NET Core / Blazor
+appsettings*.json
+wwwroot/lib/
+
+# Publish output
+publish/
+
+# Tooling
+*.vsix
+*.log
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+.DS_Store
