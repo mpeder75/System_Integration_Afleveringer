@@ -1,0 +1,80 @@
+@page "/"
+@rendermode InteractiveServer
+@using TourBooking.WebApp
+@inject TourPublisher Publisher
+
+<PageTitle>Tour Selection</PageTitle>
+
+<h1>Tour Selection</h1>
+
+<div style="max-width: 320px; display: flex; flex-direction: column; gap: 0.5rem;">
+    <label>Name</label>
+    <input @bind="_name" />
+
+    <label>Email</label>
+    <input @bind="_email" />
+
+    <label>Tours</label>
+    <select @bind="_tour">
+        <option value="">Choose one</option>
+        <option value="Rome City Walk">Rome City Walk</option>
+        <option value="Paris River Cruise">Paris River Cruise</option>
+        <option value="Tokyo Food Tour">Tokyo Food Tour</option>
+    </select>
+
+    <div>
+        <label>
+            <input type="radio" name="action" checked="@(_action == "book")"
+                   @onchange="@(() => _action = "book")" /> Book
+        </label>
+        <label>
+            <input type="radio" name="action" checked="@(_action == "cancel")"
+                   @onchange="@(() => _action = "cancel")" /> Cancel
+        </label>
+    </div>
+
+    <button @onclick="SubmitAsync" disabled="@_isSending">Submit</button>
+
+    @if (!string.IsNullOrEmpty(_status))
+    {
+        <p>@_status</p>
+    }
+</div>
+
+@code {
+    private string _name = "";
+    private string _email = "";
+    private string _tour = "";
+    private string _action = "book";
+    private string _status = "";
+    private bool _isSending;
+
+    private async Task SubmitAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_tour))
+        {
+            _status = "Please choose a tour.";
+            return;
+        }
+
+        _isSending = true;
+        _status = "";
+        try
+        {
+            // This is the whole point of the exercise: the action decides the routing key.
+            string routingKey = _action == "cancel" ? "tour.cancelled" : "tour.booked";
+            string message = $"{_action.ToUpperInvariant()}: {_name} <{_email}> for '{_tour}'";
+
+            await Publisher.PublishAsync(routingKey, message);
+            _status = $"Sent '{routingKey}': {message}";
+        }
+        catch (Exception ex)
+        {
+            _status = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            _isSending = false;
+        }
+    }
+}

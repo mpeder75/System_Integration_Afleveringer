@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="../TourCompany/TourBooking.BackOffice/TourBooking.BackOffice.csproj" />
-  <Project Path="../TourCompany/TourBooking.EmailService/TourBooking.EmailService.csproj" />
-  <Project Path="../TourCompany/TourBooking.WebApp/TourBooking.WebApp.csproj" />
+  <Project Path="TourBooking.BackOffice/TourBooking.BackOffice.csproj" />
+  <Project Path="TourBooking.EmailService/TourBooking.EmailService.csproj" />
+  <Project Path="TourBooking.WebApp/TourBooking.WebApp.csproj" />
 </Solution>
